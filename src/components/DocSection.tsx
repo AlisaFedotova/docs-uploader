@@ -1,7 +1,7 @@
 import DocItem from './DocItem';
-import { IDocument } from '../models/IUser';
+import { IDocumentExt } from '../models/IUser';
 
-function DocSection({ document }: { document: IDocument }) {
+function DocSection({ document }: { document: IDocumentExt }) {
   return (
     <section className="px-4 pt-7 pb-3 border-b border-gray-200">
       <h2 className="text-xl font-bold">{document.documentName}</h2>
@@ -9,6 +9,7 @@ function DocSection({ document }: { document: IDocument }) {
         <DocItem
           pageName={scanType.pageName}
           required={scanType.required}
+          id={document.id}
           key={index}
         />
       ))}
