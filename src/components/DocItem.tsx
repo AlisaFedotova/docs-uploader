@@ -1,28 +1,47 @@
-import FileAttached from '../components/FileAttached';
+import FileAttached from './FileAttached';
 import { IScanTypeExt } from '../models/IUser';
-
-
+import { useDispatch } from 'react-redux';
+import { updateFirstDocument } from '../store/slice';
 
 function DocItem({ pageName, required, id }: IScanTypeExt) {
+
+  // const { fields } = useForm();
+
+  const dispatch = useDispatch();
+
+  const handleChange = (event: any) => {
+    console.log('Eeeeevent: ', event);
+
+    dispatch(updateFirstDocument(event.target.value));
+  };
+
   return (
     <div className="mt-3 py-3 border-b border-gray-200 last:border-0">
-      <p>
+      <p className="mb-3">
         {pageName}
         {required && ' (обязательно)'}
       </p>
-      <div className="flex mt-2">
-        <div className="mt-3">
+      {/* {fields[id] && <FileAttached fileName={fields[id]} />} */}
+      <div className="flex">
+        <div className="">
           <div className="relative cursor-pointer inline-block py-2">
             <input
               type="file"
               id={id}
+              name={id}
+              form="docs-form"
               accept="image/png, image/jpeg, image/heic, image/heif"
               className="absolute inset-0 opacity-0"
+              onChange={handleChange}
+              required={required}
             />
             <span className="btn-primary">Прикрепить</span>
           </div>
         </div>
-        <button className="btn-transparent ml-auto">Пример</button>
+        <button
+          className="btn-transparent ml-auto">
+          Пример
+        </button>
       </div>
     </div>
   );

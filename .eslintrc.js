@@ -46,5 +46,7 @@ module.exports = {
     'no-param-reassign': 'error',
     'prefer-arrow-callback': 'error',
     'nonblock-statement-body-position': 'error',
+    '@typescript-eslint/ban-types': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
   },
 };

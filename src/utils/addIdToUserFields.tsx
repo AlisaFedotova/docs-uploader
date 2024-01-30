@@ -1,8 +1,14 @@
-import { IDocument, IDocumentExt, IScanType, IScanTypeExt, IUser, IUserExt } from '../models/IUser';
+import {
+  IDocument,
+  IDocumentExt,
+  IScanType,
+  IScanTypeExt,
+  IUser,
+  IUserExt,
+} from '../models/IUser';
 import { v4 as uuidv4 } from 'uuid';
 
 function addIdToUserFields(user: IUser): IUserExt {
-
   function addIdToScanTypes(scanTypes: IScanType[]): IScanTypeExt[] {
     return scanTypes.map((scanType) => ({
       ...scanType,

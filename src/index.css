@@ -4,7 +4,7 @@
 
 @layer components {
   .btn-primary {
-    @apply py-2 px-4 bg-sky-700 text-white font-semibold rounded-lg shadow-md hover:bg-sky-900 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-75 disabled:hover:bg-sky-700;
+    @apply py-2 px-4 bg-sky-700 text-white font-semibold rounded-lg shadow-md hover:bg-sky-900 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-75 disabled:hover:bg-sky-700 disabled:opacity-50;
   }
 	.btn-transparent {
 		@apply py-2 px-4 text-sky-700 font-semibold rounded-lg hover:text-sky-900 focus:outline-none focus:text-sky-500;
