@@ -1,12 +1,15 @@
 import FileAttached from './FileAttached';
 import { IScanTypeExt } from '../models/IUser';
-import { useDispatch } from 'react-redux';
-import { updateFirstDocument } from '../store/slice';
+import { useDispatch } from "react-redux";
+import { updateFirstDocument } from "../store/slice";
+import Popup from './Popup';
+import { useState } from 'react';
 
 function DocItem({ pageName, required, id }: IScanTypeExt) {
+  const [show, setShow] = useState(false);
 
   // const { fields } = useForm();
-
+  
   const dispatch = useDispatch();
 
   const handleChange = (event: any) => {
@@ -39,9 +42,20 @@ function DocItem({ pageName, required, id }: IScanTypeExt) {
           </div>
         </div>
         <button
-          className="btn-transparent ml-auto">
+          className="btn-transparent ml-auto"
+          onClick={() => setShow(true)}>
           Пример
         </button>
+        <Popup isOpen={show}>
+          Hello there!
+          <br />
+          <button
+            onClick={() => {
+              setShow(false);
+            }}>
+            Продолжить
+          </button>
+        </Popup>
       </div>
     </div>
   );
