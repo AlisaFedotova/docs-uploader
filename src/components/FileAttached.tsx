@@ -1,17 +1,42 @@
-function FileAttached({ fileName }: { fileName: string }) {
+import { useState } from 'react';
+import Popup from './Popup';
+
+function FileAttached({
+  fileName,
+  fileSrc,
+  docName,
+  title,
+}: {
+  fileName: string;
+  fileSrc: string;
+  docName: string;
+  title: string;
+}) {
+  const [show, setShow] = useState<boolean>(false);
+
   return (
     <div className="flex flex-wrap gap-3 mb-3">
       <div className="h-12">
-        <img src="./img/icons/file.svg" alt="Иконка файла" />
+        <button type="button" onClick={() => setShow(true)}>
+          <img src="./img/icons/file.svg" alt="Иконка файла" />
+        </button>
       </div>
       <div className="flex justify-center flex-col text-gray-500">
         <div>{fileName}</div>
         <div>Вы загрузили</div>
       </div>
       <div className="flex gap-4 items-center sm:ml-auto">
-        <button className="btn-outline btn-add"></button>
-        <button className="btn-outline btn-remove"></button>
+        <button type="button" className="btn-outline btn-add"></button>
+        <button type="button" className="btn-outline btn-remove"></button>
       </div>
+      <Popup isOpen={show} docName={docName} imgSrc={fileSrc} title={title}>
+        <button
+          type="button"
+          className="btn-primary w-full"
+          onClick={() => setShow(false)}>
+          Продолжить
+        </button>
+      </Popup>
     </div>
   );
 }

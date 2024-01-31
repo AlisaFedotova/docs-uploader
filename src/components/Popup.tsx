@@ -1,11 +1,15 @@
 import { ReactNode, useEffect, useRef } from 'react';
 
-function Popup(props: { isOpen: boolean; title: string; docName:string; children: ReactNode }) {
+function Popup(props: {
+  isOpen: boolean;
+  title: string;
+  docName: string;
+  imgSrc: string;
+  children: ReactNode;
+}) {
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    console.log('popup');
-
     if (!props.isOpen) {
       return;
     }
@@ -13,8 +17,7 @@ function Popup(props: { isOpen: boolean; title: string; docName:string; children
     const dialog = ref.current;
 
     if (!dialog) {
-      console.error('Popup not found');
-      return;
+      throw new Error('Popup not found');
     }
 
     dialog.showModal();
@@ -26,8 +29,13 @@ function Popup(props: { isOpen: boolean; title: string; docName:string; children
 
   return (
     <dialog ref={ref} className="p-5 rounded-lg m-auto max-w-md">
-      <h2 className="text-xl font-bold mb-4 text-center">{props.docName} ({props.title})</h2>
-      <img className='mb-3 rounded-lg' src="./img/blank-image.jpg"></img>
+      <h2 className="text-xl font-bold mb-4 text-center">
+        {props.docName} ({props.title})
+      </h2>
+      <img
+        className="mb-3 rounded-lg"
+        src={props.imgSrc}
+        alt="Превью документа"></img>
       {props.children}
     </dialog>
   );

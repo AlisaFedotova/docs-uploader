@@ -3,11 +3,12 @@ import { IScanTypeExt } from '../models/IUser';
 import { useDispatch } from 'react-redux';
 import { updateFirstDocument, validateForm } from '../store/docsUploadSlice';
 import Popup from './Popup';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 function DocItem({ pageName, required, id, docName }: IScanTypeExt) {
-  const [show, setShow] = useState(false);
-  const [fileName, setFileName] = useState(null);
+  const [show, setShow] = useState<boolean>(false);
+  const [fileName, setFileName] = useState<string>('');
+  const [fileSrc, setFileSrc] = useState<string>('');
 
   // const { fields } = useForm();
 
@@ -15,9 +16,26 @@ function DocItem({ pageName, required, id, docName }: IScanTypeExt) {
 
   const handleChange = (event: any) => {
     console.log('Eeeeevent: ', event);
+    const file = event.target.files[0];
 
-    setFileName(event.target.value);
-    dispatch(updateFirstDocument(event.target.value));
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = function (e: ProgressEvent<FileReader>) {
+        console.log('reader', reader);
+        if (e.target) {
+          const result = e.target.result as string;
+          setFileSrc(result);
+        }
+      };
+      reader.readAsDataURL(file);
+      console.log('reader2', reader);
+    }
+
+    console.log(file);
+
+    setFileName(file.name);
+    dispatch(updateFirstDocument(file.name));
     dispatch(validateForm());
   };
 
@@ -27,7 +45,14 @@ function DocItem({ pageName, required, id, docName }: IScanTypeExt) {
         {pageName}
         {required && ' (обязательно)'}
       </p>
-      {fileName && <FileAttached fileName={fileName} />}
+      {fileName && (
+        <FileAttached
+          fileName={fileName}
+          fileSrc={fileSrc}
+          docName={docName ? docName : ''}
+          title={pageName}
+        />
+      )}
       <div className="flex">
         <div className="">
           <div className="relative cursor-pointer inline-block py-2">
@@ -50,7 +75,11 @@ function DocItem({ pageName, required, id, docName }: IScanTypeExt) {
           onClick={() => setShow(true)}>
           Пример
         </button>
-        <Popup isOpen={show} title={pageName} docName={docName ? docName : ''}>
+        <Popup
+          isOpen={show}
+          title={pageName}
+          docName={docName ? docName : ''}
+          imgSrc="./img/blank-image.jpg">
           <button
             type="button"
             className="btn-primary w-full"
