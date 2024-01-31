@@ -1,6 +1,9 @@
 import { IUserExt } from '../models/IUser';
+import convertDateFormat from '../utils/convertDateFormat';
 
 function Header({ user }: { user: IUserExt }) {
+  const convertDate = convertDateFormat(user.dateOfBirth);
+
   return (
     <header className="py-5">
       <h1 className="text-3xl font-bold leading-10">
@@ -9,7 +12,7 @@ function Header({ user }: { user: IUserExt }) {
       <dl>
         <dt className="mt-5">Дата рождения:</dt>
         <dd className="text-gray-500">
-          <time>{user.dateOfBirth}</time>
+          <time>{convertDate}</time>
         </dd>
       </dl>
     </header>
