@@ -1,12 +1,12 @@
 import { ReactNode, useEffect, useRef } from 'react';
 
-function Popup({ isOpen, children }: { isOpen: boolean; children: ReactNode }) {
+function Popup(props: { isOpen: boolean; title: string; docName:string; children: ReactNode }) {
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
     console.log('popup');
 
-    if (!isOpen) {
+    if (!props.isOpen) {
       return;
     }
 
@@ -22,9 +22,15 @@ function Popup({ isOpen, children }: { isOpen: boolean; children: ReactNode }) {
     return () => {
       dialog.close();
     };
-  }, [isOpen]);
+  }, [props.isOpen]);
 
-  return <dialog ref={ref}>{children}</dialog>;
+  return (
+    <dialog ref={ref} className="p-5 rounded-lg m-auto max-w-md">
+      <h2 className="text-xl font-bold mb-4 text-center">{props.docName} ({props.title})</h2>
+      <img className='mb-3 rounded-lg' src="./img/blank-image.jpg"></img>
+      {props.children}
+    </dialog>
+  );
 }
 
 export default Popup;

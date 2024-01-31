@@ -7,6 +7,7 @@ interface IScanType extends IBaseScanType {}
 
 interface IScanTypeExt extends IBaseScanType {
   id: string;
+  docName?: string;
 }
 
 interface IBaseDocument {

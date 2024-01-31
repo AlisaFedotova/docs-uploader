@@ -1,6 +1,6 @@
 function FileAttached({ fileName }: { fileName: string }) {
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-wrap gap-3 mb-3">
       <div className="h-12">
         <img src="./img/icons/file.svg" alt="Иконка файла" />
       </div>

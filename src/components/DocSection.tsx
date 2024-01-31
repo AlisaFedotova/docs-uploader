@@ -11,6 +11,7 @@ function DocSection({ document }: { document: IDocumentExt }) {
           pageName={scanType.pageName}
           required={scanType.required}
           id={scanType.id}
+          docName={document.documentName}
           key={scanType.id}
         />
       ))}

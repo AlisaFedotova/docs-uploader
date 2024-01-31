@@ -1,21 +1,24 @@
 import FileAttached from './FileAttached';
 import { IScanTypeExt } from '../models/IUser';
-import { useDispatch } from "react-redux";
-import { updateFirstDocument } from "../store/slice";
+import { useDispatch } from 'react-redux';
+import { updateFirstDocument, validateForm } from '../store/docsUploadSlice';
 import Popup from './Popup';
 import { useState } from 'react';
 
-function DocItem({ pageName, required, id }: IScanTypeExt) {
+function DocItem({ pageName, required, id, docName }: IScanTypeExt) {
   const [show, setShow] = useState(false);
+  const [fileName, setFileName] = useState(null);
 
   // const { fields } = useForm();
-  
+
   const dispatch = useDispatch();
 
   const handleChange = (event: any) => {
     console.log('Eeeeevent: ', event);
 
+    setFileName(event.target.value);
     dispatch(updateFirstDocument(event.target.value));
+    dispatch(validateForm());
   };
 
   return (
@@ -24,7 +27,7 @@ function DocItem({ pageName, required, id }: IScanTypeExt) {
         {pageName}
         {required && ' (обязательно)'}
       </p>
-      {/* {fields[id] && <FileAttached fileName={fields[id]} />} */}
+      {fileName && <FileAttached fileName={fileName} />}
       <div className="flex">
         <div className="">
           <div className="relative cursor-pointer inline-block py-2">
@@ -43,16 +46,15 @@ function DocItem({ pageName, required, id }: IScanTypeExt) {
         </div>
         <button
           className="btn-transparent ml-auto"
+          type="button"
           onClick={() => setShow(true)}>
           Пример
         </button>
-        <Popup isOpen={show}>
-          Hello there!
-          <br />
+        <Popup isOpen={show} title={pageName} docName={docName ? docName : ''}>
           <button
-            onClick={() => {
-              setShow(false);
-            }}>
+            type="button"
+            className="btn-primary w-full"
+            onClick={() => setShow(false)}>
             Продолжить
           </button>
         </Popup>
