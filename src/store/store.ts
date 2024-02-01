@@ -6,3 +6,5 @@ export const store = configureStore({
     docsUpload: docsUploadReducer,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;

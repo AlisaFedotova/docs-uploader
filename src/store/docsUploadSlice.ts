@@ -1,10 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+interface DocsUploadState {
+  fields: Array<string>;
+}
 
 export const docsUploadSlice = createSlice({
   name: 'docsUpload',
-  initialState: { fields: new Array<string>() },
+  initialState: { fields: [] },
   reducers: {
-    uploadDocument: (state, action) => {
+    uploadDocument: (state: DocsUploadState, action: PayloadAction<string>) => {
       state.fields.push(action.payload);
     },
   },

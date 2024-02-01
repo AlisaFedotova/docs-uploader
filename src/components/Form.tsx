@@ -2,11 +2,12 @@ import { IDocumentExt, IScanTypeExt, IUserExt } from '../models/IUser';
 import DocSection from './DocSection';
 import React, { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 function defineRequiredOptions(userData: IUserExt): Array<string> {
-  const arr = new Array<string>();
+  const arr: string[] = [];
   userData.documents.forEach((document: IDocumentExt) => {
-    let requiredScanTypes = document.scanTypes
+    const requiredScanTypes = document.scanTypes
       .map((scanType: IScanTypeExt) => (scanType.required ? scanType.id : ''))
       .filter((index: string) => index !== '');
 
@@ -23,7 +24,7 @@ const isFormValid = (
   if (fields.length === 0) {
     return false;
   }
-  
+
   for (const requiredField of requiredFields) {
     if (!fields.includes(requiredField)) {
       return false;
@@ -36,7 +37,7 @@ const isFormValid = (
 function Form(props: { user: IUserExt }) {
   const formRef = useRef<HTMLFormElement>(null);
   const value: Array<string> = useSelector(
-    (state: any) => state.docsUpload.fields,
+    (state: RootState) => state.docsUpload.fields,
   );
   const [isDisabled, setDisabled] = useState(true);
   const requiredFields: Array<string> = defineRequiredOptions(props.user);
