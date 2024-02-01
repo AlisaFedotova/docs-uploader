@@ -1,12 +1,7 @@
 import { useState } from 'react';
 import Popup from './Popup';
 
-function FileAttached({
-  fileName,
-  fileSrc,
-  docName,
-  title,
-}: {
+function FileAttached(props: {
   fileName: string;
   fileSrc: string;
   docName: string;
@@ -22,14 +17,18 @@ function FileAttached({
         </button>
       </div>
       <div className="flex justify-center flex-col text-gray-500">
-        <div>{fileName}</div>
+        <div>{props.fileName}</div>
         <div>Вы загрузили</div>
       </div>
       <div className="flex gap-4 items-center sm:ml-auto">
         <button type="button" className="btn-outline btn-add"></button>
         <button type="button" className="btn-outline btn-remove"></button>
       </div>
-      <Popup isOpen={show} docName={docName} imgSrc={fileSrc} title={title}>
+      <Popup
+        isOpen={show}
+        docName={props.docName}
+        imgSrc={props.fileSrc}
+        title={props.title}>
         <button
           type="button"
           className="btn-primary w-full"

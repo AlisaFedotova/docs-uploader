@@ -35,7 +35,8 @@ function Popup(props: {
       <img
         className="mb-3 rounded-lg"
         src={props.imgSrc}
-        alt="Превью документа"></img>
+        alt="Превью документа"
+      />
       {props.children}
     </dialog>
   );

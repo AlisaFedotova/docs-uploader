@@ -3,19 +3,16 @@ import { IScanTypeExt } from '../models/IUser';
 import { useDispatch } from 'react-redux';
 import { updateDocument } from '../store/docsUploadSlice';
 import Popup from './Popup';
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 
 function DocItem({ pageName, required, id, docName }: IScanTypeExt) {
   const [show, setShow] = useState<boolean>(false);
   const [fileName, setFileName] = useState<string>('');
   const [fileSrc, setFileSrc] = useState<string>('');
 
-  // const { fields } = useForm();
-
   const dispatch = useDispatch();
 
   const handleChange = (event: any) => {
-    console.log('Eeeeevent: ', event);
     const file = event.target.files[0];
 
     if (file) {
@@ -27,16 +24,12 @@ function DocItem({ pageName, required, id, docName }: IScanTypeExt) {
           setFileSrc(result);
         }
       };
-      reader.readAsDataURL(file);
-    }
-    setFileName(file.name);
 
-    const params = {
-      id,
-      required,
-      fileName: file.name,
-    };
-    dispatch(updateDocument(params));
+      reader.readAsDataURL(file);
+
+      setFileName(file.name);
+      dispatch(updateDocument(id));
+    }
   };
 
   return (

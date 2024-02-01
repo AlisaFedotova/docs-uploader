@@ -17,38 +17,31 @@ function defineRequiredOptions(userData: IUserExt): Array<string> {
 }
 
 const isFormValid = (
-  fields: { [key: string]: boolean },
+  fields: Array<string>,
   requiredFields: Array<string>,
 ): boolean => {
-  if (Object.keys(fields).length === 0) {
+  if (fields.length === 0) {
     return false;
   }
-
+  
   for (const requiredField of requiredFields) {
-    if (!fields[requiredField]) {
+    if (!fields.includes(requiredField)) {
       return false;
     }
   }
-
-  console.log('form is valid');
 
   return true;
 };
 
 function Form(props: { user: IUserExt }) {
   const formRef = useRef<HTMLFormElement>(null);
-  const value: { [key: string]: boolean } = useSelector(
+  const value: Array<string> = useSelector(
     (state: any) => state.docsUpload.fields,
   );
   const [isDisabled, setDisabled] = useState(true);
-
   const requiredFields: Array<string> = defineRequiredOptions(props.user);
 
-  console.log('requiredFields', requiredFields);
-
   React.useEffect(() => {
-    console.log('Value changed:', value);
-
     setDisabled(!isFormValid(value, requiredFields));
   }, [value]);
 

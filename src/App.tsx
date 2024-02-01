@@ -1,4 +1,3 @@
-import './App.css';
 import DocsUpload from './components/DocsUpload';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
