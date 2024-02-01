@@ -1,7 +1,7 @@
 import FileAttached from './FileAttached';
 import { IScanTypeExt } from '../models/IUser';
 import { useDispatch } from 'react-redux';
-import { updateFirstDocument, validateForm } from '../store/docsUploadSlice';
+import { updateDocument } from '../store/docsUploadSlice';
 import Popup from './Popup';
 import { ChangeEvent, useState } from 'react';
 
@@ -22,21 +22,21 @@ function DocItem({ pageName, required, id, docName }: IScanTypeExt) {
       const reader = new FileReader();
 
       reader.onload = function (e: ProgressEvent<FileReader>) {
-        console.log('reader', reader);
         if (e.target) {
           const result = e.target.result as string;
           setFileSrc(result);
         }
       };
       reader.readAsDataURL(file);
-      console.log('reader2', reader);
     }
-
-    console.log(file);
-
     setFileName(file.name);
-    dispatch(updateFirstDocument(file.name));
-    dispatch(validateForm());
+
+    const params = {
+      id,
+      required,
+      fileName: file.name,
+    };
+    dispatch(updateDocument(params));
   };
 
   return (
