@@ -1,5 +1,6 @@
-import DocsUpload from './components/DocsUpload';
 import { Provider } from 'react-redux';
+
+import DocsUpload from './components/DocsUpload';
 import { store } from './store/store';
 
 function App() {

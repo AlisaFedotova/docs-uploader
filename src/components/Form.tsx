@@ -1,8 +1,11 @@
-import { IDocumentExt, IScanTypeExt, IUserExt } from '../models/IUser';
-import DocSection from './DocSection';
 import React, { useRef, useState } from 'react';
+
 import { useSelector } from 'react-redux';
+
+import { IDocumentExt, IScanTypeExt, IUserExt } from '../models/IUser';
 import { RootState } from '../store/store';
+
+import DocSection from './DocSection';
 
 function defineRequiredOptions(userData: IUserExt): Array<string> {
   const arr: string[] = [];

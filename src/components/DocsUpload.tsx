@@ -1,9 +1,11 @@
-import Header from './Header';
 import React from 'react';
+
+import { userData } from '../data/user-data';
 import { IUserExt } from '../models/IUser';
 import addIdToUserFields from '../utils/addIdToUserFields';
-import { userData } from '../data/user-data';
+
 import Form from './Form';
+import Header from './Header';
 
 const userExt: IUserExt = addIdToUserFields(userData);
 

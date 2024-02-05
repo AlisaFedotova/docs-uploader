@@ -1,5 +1,6 @@
-import DocItem from './DocItem';
 import { IDocumentExt } from '../models/IUser';
+
+import DocItem from './DocItem';
 
 function DocSection({ document }: { document: IDocumentExt }) {
   return (

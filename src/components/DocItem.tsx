@@ -1,9 +1,12 @@
-import FileAttached from './FileAttached';
-import { IScanTypeExt } from '../models/IUser';
-import { useDispatch } from 'react-redux';
-import { updateDocument } from '../store/docsUploadSlice';
-import Popup from './Popup';
 import { ChangeEvent, useState } from 'react';
+
+import { useDispatch } from 'react-redux';
+
+import { IScanTypeExt } from '../models/IUser';
+import { updateDocument } from '../store/docsUploadSlice';
+
+import FileAttached from './FileAttached';
+import Popup from './Popup';
 
 function DocItem({ pageName, required, id, docName }: IScanTypeExt) {
   const [show, setShow] = useState<boolean>(false);
@@ -13,8 +16,6 @@ function DocItem({ pageName, required, id, docName }: IScanTypeExt) {
   const dispatch = useDispatch();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event);
-
     if (event.target.files) {
       const [file] = event.target.files;
       const reader = new FileReader();

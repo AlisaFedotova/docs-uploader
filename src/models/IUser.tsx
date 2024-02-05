@@ -3,7 +3,7 @@ interface IBaseScanType {
   required: boolean;
 }
 
-interface IScanType extends IBaseScanType {}
+type IScanType = IBaseScanType;
 
 interface IScanTypeExt extends IBaseScanType {
   id: string;
