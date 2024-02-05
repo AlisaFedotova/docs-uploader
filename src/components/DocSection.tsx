@@ -2,17 +2,17 @@ import { IDocumentExt } from '../models/IUser';
 
 import DocItem from './DocItem';
 
-function DocSection({ document }: { document: IDocumentExt }) {
+function DocSection(props: { document: IDocumentExt }) {
   return (
     <section className="px-4 pt-7 pb-3 border-b border-gray-200">
-      <h2 className="text-xl font-bold">{document.documentName}</h2>
+      <h2 className="text-xl font-bold">{props.document.documentName}</h2>
 
-      {document.scanTypes.map((scanType) => (
+      {props.document.scanTypes.map((scanType) => (
         <DocItem
           pageName={scanType.pageName}
           required={scanType.required}
           id={scanType.id}
-          docName={document.documentName}
+          docName={props.document.documentName}
           key={scanType.id}
         />
       ))}

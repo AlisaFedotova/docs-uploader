@@ -12,7 +12,12 @@ const userExt: IUserExt = addIdToUserFields(userData);
 function DocsUpload(): React.JSX.Element {
   return (
     <>
-      <Header user={userExt} />
+      <Header
+        dateOfBirth={userExt.dateOfBirth}
+        lastName={userExt.lastName}
+        firstName={userExt.firstName}
+        patronymic={userExt.patronymic}
+      />
       <Form user={userExt} />
     </>
   );

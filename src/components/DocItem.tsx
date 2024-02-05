@@ -8,7 +8,7 @@ import { updateDocument } from '../store/docsUploadSlice';
 import FileAttached from './FileAttached';
 import Popup from './Popup';
 
-function DocItem({ pageName, required, id, docName }: IScanTypeExt) {
+function DocItem(props: IScanTypeExt) {
   const [show, setShow] = useState<boolean>(false);
   const [fileName, setFileName] = useState<string>('');
   const [fileSrc, setFileSrc] = useState<string>('');
@@ -30,22 +30,22 @@ function DocItem({ pageName, required, id, docName }: IScanTypeExt) {
       reader.readAsDataURL(file);
 
       setFileName(file.name);
-      dispatch(updateDocument(id));
+      dispatch(updateDocument(props.id));
     }
   };
 
   return (
     <div className="mt-3 py-3 border-b border-gray-200 last:border-0">
       <p className="mb-3">
-        {pageName}
-        {required && ' (обязательно)'}
+        {props.pageName}
+        {props.required && ' (обязательно)'}
       </p>
       {fileName && (
         <FileAttached
           fileName={fileName}
           fileSrc={fileSrc}
-          docName={docName ? docName : ''}
-          title={pageName}
+          docName={props.docName ? props.docName : ''}
+          title={props.pageName}
         />
       )}
       <div className="flex">
@@ -53,13 +53,13 @@ function DocItem({ pageName, required, id, docName }: IScanTypeExt) {
           <div className="relative cursor-pointer inline-block py-2">
             <input
               type="file"
-              id={id}
-              name={id}
+              id={props.id}
+              name={props.id}
               form="docs-form"
               accept="image/png, image/jpeg, image/heic, image/heif"
               className="absolute inset-0 opacity-0"
               onChange={handleChange}
-              required={required}
+              required={props.required}
             />
             <span className="btn-primary">Прикрепить</span>
           </div>
@@ -72,8 +72,8 @@ function DocItem({ pageName, required, id, docName }: IScanTypeExt) {
         </button>
         <Popup
           isOpen={show}
-          title={pageName}
-          docName={docName ? docName : ''}
+          title={props.pageName}
+          docName={props.docName ? props.docName : ''}
           imgSrc="./img/blank-image.jpg">
           <button
             type="button"
