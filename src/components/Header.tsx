@@ -1,4 +1,3 @@
-import { IUserExt } from '../models/IUser';
 import convertDateFormat from '../utils/convertDateFormat';
 
 function Header(props: {

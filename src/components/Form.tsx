@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useMemo, useRef } from 'react';
 
 import { useSelector } from 'react-redux';
 
@@ -8,16 +8,13 @@ import { RootState } from '../store/store';
 import DocSection from './DocSection';
 
 function defineRequiredOptions(userData: IUserExt): Array<string> {
-  const arr: string[] = [];
-  userData.documents.forEach((document: IDocumentExt) => {
+  return userData.documents.reduce((acc: string[], document: IDocumentExt) => {
     const requiredScanTypes = document.scanTypes
-      .map((scanType: IScanTypeExt) => (scanType.required ? scanType.id : ''))
-      .filter((index: string) => index !== '');
+      .filter((scanType: IScanTypeExt) => scanType.required)
+      .map((scanType: IScanTypeExt) => scanType.id);
 
-    arr.push(...requiredScanTypes);
-  });
-
-  return arr;
+    return acc.concat(requiredScanTypes);
+  }, []);
 }
 
 const isFormValid = (
@@ -39,15 +36,16 @@ const isFormValid = (
 
 function Form(props: { user: IUserExt }) {
   const formRef = useRef<HTMLFormElement>(null);
-  const value: Array<string> = useSelector(
+  const values: Array<string> = useSelector(
     (state: RootState) => state.docsUpload.fields,
   );
-  const [isDisabled, setDisabled] = useState(true);
-  const requiredFields: Array<string> = defineRequiredOptions(props.user);
+  const requiredFields: Array<string> = useMemo(() => {
+    return defineRequiredOptions(props.user);
+  }, []);
 
-  React.useEffect(() => {
-    setDisabled(!isFormValid(value, requiredFields));
-  }, [value]);
+  const isDisabled = useMemo(() => {
+    return !isFormValid(values, requiredFields);
+  }, [values]);
 
   return (
     <form
