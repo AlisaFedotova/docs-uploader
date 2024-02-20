@@ -1,11 +1,9 @@
-import { ChangeEvent, useState } from 'react';
-
-import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 
 import { IScanTypeExt } from '../models/IUser';
-import { updateDocument } from '../store/docsUploadSlice';
 
 import FileAttached from './FileAttached';
+import FileUploader from './FileUploader';
 import Popup from './Popup';
 
 function DocItem(props: IScanTypeExt) {
@@ -13,25 +11,9 @@ function DocItem(props: IScanTypeExt) {
   const [fileName, setFileName] = useState<string>('');
   const [fileSrc, setFileSrc] = useState<string>('');
 
-  const dispatch = useDispatch();
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const [file] = event.target.files;
-      const reader = new FileReader();
-
-      reader.onload = function (e: ProgressEvent<FileReader>) {
-        if (e.target) {
-          const result = e.target.result as string;
-          setFileSrc(result);
-        }
-      };
-
-      reader.readAsDataURL(file);
-
-      setFileName(file.name);
-      dispatch(updateDocument(props.id));
-    }
+  const handleFileLoad = (fileName: string, fileSrc: string) => {
+    setFileName(fileName);
+    setFileSrc(fileSrc);
   };
 
   return (
@@ -49,21 +31,11 @@ function DocItem(props: IScanTypeExt) {
         />
       )}
       <div className="flex">
-        <div className="">
-          <div className="relative cursor-pointer inline-block py-2">
-            <input
-              type="file"
-              id={props.id}
-              name={props.id}
-              form="docs-form"
-              accept="image/png, image/jpeg, image/heic, image/heif"
-              className="absolute inset-0 opacity-0"
-              onChange={handleChange}
-              required={props.required}
-            />
-            <span className="btn-primary">Прикрепить</span>
-          </div>
-        </div>
+        <FileUploader
+          id={props.id}
+          required={props.required}
+          onFileLoad={handleFileLoad}
+        />
         <button
           className="btn-transparent ml-auto"
           type="button"
