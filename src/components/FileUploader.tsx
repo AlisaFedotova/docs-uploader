@@ -13,8 +13,6 @@ function FileUploader(props: {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
-      console.log(event.target.files);
-
       const [file] = event.target.files;
       const reader = new FileReader();
 
@@ -32,18 +30,20 @@ function FileUploader(props: {
   };
 
   return (
-    <div className="relative cursor-pointer inline-block py-2">
+    <div className="inline-block btn-primary cursor-pointer">
       <input
         type="file"
         id={props.id}
         name={props.id}
         form="docs-form"
         accept="image/png, image/jpeg, image/heic, image/heif"
-        className="absolute inset-0 opacity-0"
+        className="hidden"
         onChange={handleChange}
         required={props.required}
       />
-      <span className="btn-primary">Прикрепить</span>
+      <label htmlFor={props.id} className="cursor-pointer">
+        Прикрепить
+      </label>
     </div>
   );
 }
