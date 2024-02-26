@@ -30,7 +30,7 @@ function FileUploader(props: {
   };
 
   return (
-    <div className="inline-block btn-primary cursor-pointer">
+    <div className="inline-block btn-primary p-0 cursor-pointer">
       <input
         type="file"
         id={props.id}
@@ -41,7 +41,7 @@ function FileUploader(props: {
         onChange={handleChange}
         required={props.required}
       />
-      <label htmlFor={props.id} className="cursor-pointer">
+      <label htmlFor={props.id} className="block py-2 px-4 cursor-pointer">
         Прикрепить
       </label>
     </div>
