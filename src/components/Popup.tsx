@@ -1,43 +1,62 @@
-import { ReactNode, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 function Popup(props: {
   isOpen: boolean;
   title: string;
   docName: string;
   imgSrc: string;
-  children: ReactNode;
+  onClose: () => void;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    if (!props.isOpen) {
+    const dialog = ref.current;
+
+    if (!props.isOpen || !dialog) {
       return;
     }
 
-    const dialog = ref.current;
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dialog === event.target) {
+        props.onClose();
+      }
+    };
 
-    if (!dialog) {
-      throw new Error('Popup not found');
-    }
+    const showModal = () => {
+      dialog.showModal();
+      document.addEventListener('mousedown', handleClickOutside);
+    };
 
-    dialog.showModal();
+    const closeModal = () => {
+      dialog.close();
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+
+    showModal();
 
     return () => {
-      dialog.close();
+      closeModal();
     };
-  }, [props.isOpen]);
+  }, [props.isOpen, props.onClose]);
 
   return (
-    <dialog ref={ref} className="p-5 rounded-lg m-auto max-w-md">
-      <h2 className="text-xl font-bold mb-4 text-center">
-        {props.docName} ({props.title})
-      </h2>
-      <img
-        className="mb-3 rounded-lg"
-        src={props.imgSrc}
-        alt="Превью документа"
-      />
-      {props.children}
+    <dialog ref={ref} className="p-0 border-0 rounded-lg">
+      <div className="p-5 m-auto max-w-md">
+        <h2 className="text-xl font-bold mb-4 text-center">
+          {props.docName} ({props.title})
+        </h2>
+        <img
+          className="mb-3 rounded-lg"
+          src={props.imgSrc}
+          alt="Превью документа"
+        />
+        <button
+          type="button"
+          className="btn-primary w-full"
+          onClick={() => props.onClose()}>
+          Продолжить
+        </button>
+      </div>
     </dialog>
   );
 }

@@ -10,6 +10,10 @@ function FileAttached(props: {
 }) {
   const [show, setShow] = useState<boolean>(false);
 
+  const togglePopup = () => {
+    setShow(!show);
+  };
+
   return (
     <div className="flex flex-wrap gap-3 mb-3">
       <div className="h-12">
@@ -29,14 +33,9 @@ function FileAttached(props: {
         isOpen={show}
         docName={props.docName}
         imgSrc={props.fileSrc}
-        title={props.title}>
-        <button
-          type="button"
-          className="btn-primary w-full"
-          onClick={() => setShow(false)}>
-          Продолжить
-        </button>
-      </Popup>
+        title={props.title}
+        onClose={togglePopup}
+      />
     </div>
   );
 }

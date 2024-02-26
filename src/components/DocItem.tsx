@@ -16,6 +16,10 @@ function DocItem(props: IScanTypeExt) {
     setFileSrc(fileSrc);
   };
 
+  const togglePopup = () => {
+    setShow(!show);
+  };
+
   return (
     <div className="mt-3 py-3 border-b border-gray-200 last:border-0">
       <p className="mb-3">
@@ -46,14 +50,9 @@ function DocItem(props: IScanTypeExt) {
           isOpen={show}
           title={props.pageName}
           docName={props.docName ? props.docName : ''}
-          imgSrc="./img/blank-image.jpg">
-          <button
-            type="button"
-            className="btn-primary w-full"
-            onClick={() => setShow(false)}>
-            Продолжить
-          </button>
-        </Popup>
+          imgSrc="./img/blank-image.jpg"
+          onClose={togglePopup}
+        />
       </div>
     </div>
   );
